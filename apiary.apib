@@ -1,0 +1,113 @@
+FORMAT: 1A
+
+# Graviton API: Account
+The graviton Account API allows read access to data in the backend.
+
+All requests need to be sent with a valid ``authToken={authToken}`` Cookie as requested from [the ``/auth`` API](http://docs.gravitonapiauth.apiary.io/).
+
+
+## Group Account
+
+**Fetchmode**: There exists three fetchmodes. 
+
+| Value        | Name               | Description                                                                  |
+|:-------------|:------------------ |:---------------------------------------------------------------------------- |
+| ``1``        | FETCH_ACTIVE_ONLY  | this is the most used fetchmode, which is used to fetch all active accounts  |
+| ``2``        | FETCH_CREDIT_INFO  | to fetch more furtehr informations                                           |
+| ``4``        | FETCH_CONTRACTS    | also fetches the contracts                                                   |
+
+### Account Collection [/default/accounts/{fetchmode}]
+#### List all Accounts [GET]
+
++ Parameters
+
+    + fetchmode (optional, number, `1`) ... ``fetchmode`` is mostly set as 1 and it is optional. It has not to be changed until it is explicitly asked.
+
++ Request
+    + Header
+    
+            X-REST-Request: true
+            Cookie: authToken={authToken}
+            Accept: application/json
+
++ Response 200 (applictaion/json)
+    + Body
+    
+            [
+                {
+                  "id": 12345678912345, 
+                  "number": 45678945678,
+                  "rubricDescription": "savings account",
+                  "numberFormatted": "45 6.789.456.78",
+                  "currencyCode": 1,
+                  "currencyescription": "CHF",
+                  "balance": "1234.56",
+                  "accountTypeDescription": "savings account",
+                  "accountTypeCode": 1,
+                  "iban": "CH12 3456 7890 1234 5678 9",
+                  "status": "some status",
+                  "creditProductCode": null,
+                  "portfolioNumber": 9876543210,
+                  "begDat": "",
+                  "contractId": -1,
+                  "endDat": ""
+                }, {
+                  "id": 56789123456789, 
+                  "number": 78945678912,
+                  "rubricDescription": "checking account",
+                  "numberFormatted": "78 9.456.789.12",
+                  "currencyCode": 1,
+                  "currencyescription": "CHF",
+                  "balance": "789.56",
+                  "accountTypeDescription": "checking account",
+                  "accountTypeCode": 1,
+                  "iban": "CH12 7410 8520 9630 1234 0",
+                  "status": "some status",
+                  "creditProductCode": null,
+                  "portfolioNumber": 9876543211,
+                  "begDat": "",
+                  "contractId": -1,
+                  "endDat": ""
+                }
+            ]
+            
+### Active Accounts [/default/accounts/{?fetchmode,id}]
+#### List all active Accounts [GET]
+This returns all active accounts from a customer
+
++ Parameters
+
+    + fetchmode (required, number, `1`) ... ``fetchmode`` This parameter is mostly set as 1 and it is optional. It has not to be changed until it is explicitly asked.
+    + id (required, number, `12345678912345`) ... customer ``id`` or customer object
+    
+    
++ Request
+    + Header
+    
+            X-REST-Request: true
+            Cookie: authToken={authToken}
+            Accept: application/json
+           
++ Response 200 (application/json)
+    + Body   
+    
+            [
+                {
+                  "id": 12345678912345, 
+                  "number": 45678945678,
+                  "rubricDescription": "savings account",
+                  "numberFormatted": "45 6.789.456.78",
+                  "currencyCode": 1,
+                  "currencyescription": "CHF",
+                  "balance": "1234.56",
+                  "accountTypeDescription": "savings account",
+                  "accountTypeCode": 1,
+                  "iban": "CH12 3456 7890 1234 5678 9",
+                  "status": "some status",
+                  "creditProductCode": null,
+                  "portfolioNumber": 9876543210,
+                  "begDat": "",
+                  "contractId": -1,
+                  "endDat": ""
+                }
+            ]
